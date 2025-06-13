@@ -31,7 +31,9 @@ public class ISO8583Message {
     }
 
     private void parse(String rawMessage) {
+
         // Implementação simplificada do parser ISO8583
+
         String[] parts = rawMessage.split("\\|");
         this.mti = parts[0];
 

@@ -9,13 +9,18 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/payments")
-public class PagamentoController {
+public class PaymentController {
 
     @Autowired
     private PaymentService paymentService;
 
-    @PostMapping
-    public PaymentRequest authorize(@RequestBody PaymentRequest request) {
-        return paymentService.processPayment(request);
+    @PostMapping("/authorization")
+    public ResponseEntity<PaymentResponse> authorizePayment(
+            @RequestHeader("x-identifier") String merchantId,
+            @RequestBody PaymentRequest request) {
+
+        request.setMerchantId(merchantId);
+        PaymentResponse response = paymentService.processPayment(request);
+        return ResponseEntity.ok(response);
     }
 }
